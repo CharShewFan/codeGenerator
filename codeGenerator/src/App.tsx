@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { FieldSelector } from "./components/FieldSelector";
+import { InputClassName } from "./components/InputClassName";
+import "./App.css";
+import { Box, Button, IconButton } from "@material-ui/core";
+import { useState } from "react";
+import { fieldValue } from "./interfaces/fieldValue";
+import AddIcon from "@mui/icons-material/Add";
 
-function App() {
-  const [count, setCount] = useState(0)
+const fristField: fieldValue = {
+  accessModifier: "",
+  dataType: "",
+  collectionTyoe: "",
+};
 
+const App = () => {
+  const [editingValue, setEditingValue] = useState([fristField]);
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
+      <InputClassName />
+      {editingValue.map((row, index) => (
+        <FieldSelector
+          rowValue={row}
+          index={index}
+          editingValue={editingValue}
+          setEditingValue={setEditingValue}
+        />
+      ))}
 
-export default App
+      <Box>
+        <IconButton color="primary">
+          <AddIcon />
+        </IconButton>
+      </Box>
+      <div>
+        <Button color="primary" variant="contained">
+          Render
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default App;
